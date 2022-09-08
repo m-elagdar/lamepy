@@ -1,5 +1,5 @@
 # pylame
-A Python wrapper for [LAME](https://lame.sourceforge.io/)
+A Python wrapper for [LAME](https://lame.sourceforge.io/). It can encode and decode .mp3 audio files
 
 ## Usage
 1. Install [LAME](https://lame.sourceforge.io/)
