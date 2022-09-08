@@ -11,7 +11,7 @@ A Python wrapper for [LAME](https://lame.sourceforge.io/)
     ```
 2. (Option 2) Use pylame in a script
     ```python
-    from pylame import mp3read, mp3write
+    from pylame import mp3_read, mp3_write
     import soundfile as sf
 
     # read a file
