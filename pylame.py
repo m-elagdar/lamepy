@@ -7,7 +7,6 @@
 from ctypes import cdll, c_char, Structure, POINTER, c_short, c_void_p, pointer, c_int, c_ulong, c_ubyte
 import numpy as np
 import sys, os
-import signal
 import psutil
 
 def mp3_write(file, data, samplerate):
@@ -74,7 +73,7 @@ def mp3_read(file):
     if not headers.header_parsed: ret_code = lame.hip_decode_headers(gfp, mbp, mp3_size, pcm, pcm_r, pointer(headers))
     channels = headers.stereo
 
-    nbytes = min(round(mp3_size*300 + 7200), psutil.virtual_memory().available*0.9)
+    nbytes = min(round(mp3_size*100 + 7200), int(psutil.virtual_memory().available*0.9))
     pcmbuffer = np.zeros(nbytes, np.int8)
     pcm = pcmbuffer.ctypes.data_as(POINTER(c_short))
     if channels==2:
@@ -87,11 +86,13 @@ def mp3_read(file):
     #print(ret_code)
     #ret_code = lame.hip_decode(gfp, mbp, mp3_size, pcm, pcm_r)
     out_d = pcmbuffer[:nbytes]
+    del pcmbuffer
     out_d = np.frombuffer(out_d.tobytes(), np.int16)
     if channels==2:
         out_d_r = pcmbuffer_r[:nbytes]
         out_d_r = np.frombuffer(out_d_r.tobytes(), np.int16)
         out_d = np.stack((out_d, out_d_r), 1)
+        del pcmbuffer_r
     out_d = np.clip(out_d/np.iinfo(np.int16).max, -1, 1).astype(np.float32)
     ret_code = lame.hip_decode_exit(gfp)
     return out_d, headers.samplerate
