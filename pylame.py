@@ -85,14 +85,14 @@ def mp3_read(file):
     if ret_code<0: raise ValueError("couldn't decode mp3. return code: %d"%(ret_code))
     #print(ret_code)
     #ret_code = lame.hip_decode(gfp, mbp, mp3_size, pcm, pcm_r)
-    out_d = pcmbuffer[:nbytes]
+    out_d = pcmbuffer[:nbytes].copy()
     del pcmbuffer
     out_d = np.frombuffer(out_d.tobytes(), np.int16)
     if channels==2:
-        out_d_r = pcmbuffer_r[:nbytes]
+        out_d_r = pcmbuffer_r[:nbytes].copy()
+        del pcmbuffer_r
         out_d_r = np.frombuffer(out_d_r.tobytes(), np.int16)
         out_d = np.stack((out_d, out_d_r), 1)
-        del pcmbuffer_r
     out_d = np.clip(out_d/np.iinfo(np.int16).max, -1, 1).astype(np.float32)
     ret_code = lame.hip_decode_exit(gfp)
     return out_d, headers.samplerate
