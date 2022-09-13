@@ -4,7 +4,7 @@
 # https://github.com/gypified/libmp3lame/blob/master/API
 # https://bikulov.org/blog/2013/10/01/using-cuda-c-functions-in-python-via-.so-and-ctypes/
 
-from ctypes import cdll, c_char, Structure, POINTER, c_short, c_void_p, pointer, c_int, c_ulong, c_ubyte
+from ctypes import cdll, Structure, POINTER, c_char, c_short, c_void_p, pointer, c_int, c_ulong, c_ubyte
 import numpy as np
 import sys, os
 import psutil

@@ -1,17 +1,26 @@
-# pylame
+# lamepy
 A Python wrapper for [LAME](https://lame.sourceforge.io/). It can encode and decode .mp3 audio files
 
-## Usage
+## Environment
 1. Install [LAME](https://lame.sourceforge.io/)
     1. For Ubuntu: `sudo apt install libmp3lame-dev`
+1. Intall Python requirements
+    ```
+    # Install pip if not installed
+    wget https://bootstrap.pypa.io/get-pip.py -O - | python3
+    # Then install requirements
+    python3 -m pip install -r requirements.txt
+    ```
+
+## Usage
 1. (Option 1) Call from command line
     ```bash
-    ./pylame.py in.wav out.mp3
-    ./pylame.py in.mp3 out.wav
+    python3 ./lamepy.py in.wav out.mp3
+    python3 ./lamepy.py in.mp3 out.wav
     ```
-2. (Option 2) Use pylame in a script
+2. (Option 2) Use lamepy in a script
     ```python
-    from pylame import mp3_read, mp3_write
+    from lamepy import mp3_read, mp3_write
     import soundfile as sf
 
     # read a file
